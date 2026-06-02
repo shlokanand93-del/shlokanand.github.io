@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shlok Anand — Aeronautical Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0c11;
+    --bg2:#0e1118;
+    --panel:#11151e;
+    --ink:#eceae3;
+    --muted:#8b909d;
+    --faint:#5b6170;
+    --line:rgba(236,234,227,.10);
+    --line2:rgba(236,234,227,.05);
+    --amber:#ff6a3d;     /* high-velocity / afterburner */
+    --cyan:#54d6d8;      /* cold flow */
+    --maxw:1180px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Hanken Grotesk",sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* ----- grid + grain atmosphere ----- */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(var(--line2) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line2) 1px,transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 85%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:"JetBrains Mono",monospace;font-weight:400}
+  .tick{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+
+  /* ----- nav ----- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 28px;
+    backdrop-filter:blur(10px);
+    background:linear-gradient(to bottom,rgba(10,12,17,.85),rgba(10,12,17,0));
+    border-bottom:1px solid transparent;transition:border-color .3s;
+  }
+  nav.scrolled{border-bottom:1px solid var(--line)}
+  nav .brand{font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.1em}
+  nav .brand b{color:var(--amber);font-weight:500}
+  nav .links{display:flex;gap:26px}
+  nav .links a{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.08em;color:var(--muted);transition:color .2s}
+  nav .links a:hover{color:var(--ink)}
+  @media(max-width:680px){nav .links{display:none}}
+
+  /* ----- hero ----- */
+  header{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;overflow:hidden}
+  .hero-svg{position:absolute;inset:0;width:100%;height:100%;z-index:1;opacity:.55}
+  .stream{fill:none;stroke-width:1.1;stroke-linecap:round}
+  .stream.a{stroke:var(--cyan)}
+  .stream.b{stroke:var(--amber)}
+  .stream-anim{stroke-dasharray:6 220;animation:flow 9s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-1356}}
+  .hero-inner{position:relative;z-index:3;max-width:880px}
+  .eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:30px}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 14px var(--amber)}
+  h1{
+    font-family:"Fraunces",serif;font-weight:400;
+    font-size:clamp(46px,8.5vw,108px);line-height:.95;letter-spacing:-.02em;
+    margin-bottom:26px;
+  }
+  h1 .em{font-style:italic;color:var(--amber)}
+  .lede{font-size:clamp(17px,2.2vw,21px);color:var(--muted);max-width:640px;font-weight:300;margin-bottom:38px}
+  .lede b{color:var(--ink);font-weight:500}
+  .cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn{
+    font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.08em;
+    padding:13px 22px;border:1px solid var(--line);border-radius:2px;
+    color:var(--ink);transition:all .25s;display:inline-flex;align-items:center;gap:9px;
+  }
+  .btn:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-2px)}
+  .btn.solid{background:var(--amber);color:#120a06;border-color:var(--amber);font-weight:500}
+  .btn.solid:hover{background:#ff8059;color:#120a06}
+  .scaledown{position:absolute;left:28px;bottom:34px;z-index:3;display:flex;align-items:center;gap:12px}
+  .scalebar{width:120px;height:6px;border-radius:3px;background:linear-gradient(90deg,#1b3a6b,var(--cyan),#f4e04d,var(--amber),#c81b1b)}
+
+  /* ----- section frame ----- */
+  section{position:relative;padding:110px 0;border-top:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:54px;flex-wrap:wrap}
+  .sec-head .no{font-family:"JetBrains Mono",monospace;color:var(--amber);font-size:13px;letter-spacing:.1em}
+  .sec-head h2{font-family:"Fraunces",serif;font-weight:400;font-size:clamp(30px,5vw,52px);letter-spacing:-.02em;line-height:1}
+  .sec-head .meta{margin-left:auto;max-width:340px;color:var(--muted);font-size:14.5px}
+
+  /* ----- about / skills ----- */
+  .about-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:64px}
+  @media(max-width:840px){.about-grid{grid-template-columns:1fr;gap:44px}}
+  .about-grid p{font-size:17px;color:#c8c8c2;margin-bottom:20px}
+  .about-grid p b{color:var(--ink);font-weight:500}
+  .skillset{display:flex;flex-direction:column;gap:24px}
+  .skillgrp .lbl{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+  .skillgrp .lbl::before{content:"";width:5px;height:5px;background:var(--cyan);border-radius:50%}
+  .skillgrp h4{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-size:13px;padding:5px 12px;border:1px solid var(--line);border-radius:2px;color:#cfd2d8;transition:all .2s}
+  .chip:hover{border-color:var(--cyan);color:var(--cyan)}
+
+  /* ----- projects ----- */
+  .proj{
+    position:relative;border:1px solid var(--line);border-radius:3px;
+    background:linear-gradient(180deg,var(--panel),#0d1118);
+    padding:34px 34px 30px;margin-bottom:22px;overflow:hidden;
+    transition:border-color .3s,transform .3s;
+  }
+  .proj::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--amber);transform:scaleY(0);transform-origin:top;transition:transform .4s}
+  .proj:hover{border-color:rgba(236,234,227,.22);transform:translateY(-3px)}
+  .proj:hover::before{transform:scaleY(1)}
+  .proj .coord{position:absolute;top:16px;right:18px;font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--faint);letter-spacing:.1em}
+  .proj-top{display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:14px}
+  .proj-num{font-family:"Fraunces",serif;font-size:30px;color:var(--faint);line-height:1;min-width:46px}
+  .proj h3{font-family:"Fraunces",serif;font-weight:400;font-size:clamp(22px,3vw,30px);letter-spacing:-.01em;line-height:1.12}
+  .proj .sub{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--cyan);letter-spacing:.04em;margin-top:7px}
+  .proj .role{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:2px;padding:5px 10px;white-space:nowrap}
+  .proj-body{display:grid;grid-template-columns:1.4fr 1fr;gap:34px;margin-top:20px;padding-left:64px}
+  @media(max-width:760px){.proj-body{grid-template-columns:1fr;gap:22px;padding-left:0}}
+  .proj-desc{font-size:15.5px;color:#c4c6cc}
+  .hl{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .hl li{position:relative;padding-left:20px;font-size:14px;color:#b6b9c1}
+  .hl li::before{content:"›";position:absolute;left:0;top:-1px;color:var(--amber);font-family:"JetBrains Mono",monospace}
+  .hl li b{color:var(--ink);font-weight:600}
+  .metrics{display:flex;gap:26px;flex-wrap:wrap;margin-top:22px;padding-left:64px}
+  @media(max-width:760px){.metrics{padding-left:0}}
+  .metric .v{font-family:"Fraunces",serif;font-size:32px;color:var(--amber);line-height:1}
+  .metric .k{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+  .tools{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px;padding-left:64px}
+  @media(max-width:760px){.tools{padding-left:0}}
+  .tool{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--faint);padding:3px 9px;border:1px solid var(--line2);border-radius:2px}
+
+  /* ----- contact ----- */
+  #contact{text-align:center;padding:130px 0 110px}
+  #contact h2{font-family:"Fraunces",serif;font-weight:400;font-size:clamp(34px,6vw,68px);letter-spacing:-.02em;margin-bottom:22px;line-height:1.02}
+  #contact h2 .em{font-style:italic;color:var(--amber)}
+  #contact p{color:var(--muted);max-width:520px;margin:0 auto 38px;font-size:17px}
+  .contact-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  footer{border-top:1px solid var(--line);padding:30px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  footer .tick{color:var(--faint)}
+
+  /* ----- reveal ----- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="brand" href="#top">SA<b>·</b>AERO</a>
+  <div class="links">
+    <a href="#about">about</a>
+    <a href="#work">work</a>
+    <a href="#contact">contact</a>
+  </div>
+</nav>
+
+<header id="top">
+  <!-- flow-field backdrop: streamlines bending around an implied bluff body -->
+  <svg class="hero-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g class="stream-anim">
+      <path class="stream a" d="M-40,120 C300,120 420,150 540,250 C620,316 760,330 1240,300"/>
+      <path class="stream a" d="M-40,180 C320,180 430,210 545,290 C630,350 770,370 1240,355"/>
+      <path class="stream b" d="M-40,250 C340,250 450,270 548,330 C640,388 780,420 1240,430"/>
+      <path class="stream b" d="M-40,330 C360,330 470,330 552,360 C660,400 800,470 1240,520"/>
+      <path class="stream a" d="M-40,420 C360,420 470,420 545,400 C660,365 800,540 1240,600"/>
+      <path class="stream a" d="M-40,500 C320,500 440,500 530,470 C650,425 800,610 1240,650"/>
+    </g>
+    <!-- recirculation hint -->
+    <path class="stream b" d="M560,330 C600,300 640,310 650,350 C658,388 612,400 580,378 C556,362 552,344 560,330 Z" opacity=".5"/>
+  </svg>
+
+  <div class="wrap hero-inner">
+    <div class="eyebrow">
+      <span class="dot"></span>
+      <span class="tick">M.Sc. Aeronautical Engineering · Politecnico di Milano</span>
+    </div>
+    <h1>Shlok&nbsp;Anand<br><span class="em">resolving</span> the flow.</h1>
+    <p class="lede">Aeronautical engineer working at the intersection of <b>computational fluid dynamics</b>, <b>fluid–structure interaction</b>, and <b>flight control</b> — from zonal turbulence methods and eVTOL aeroacoustics to robust H&infin; control and system identification.</p>
+    <div class="cta">
+      <a class="btn solid" href="#work">View work <span class="mono">→</span></a>
+      <a class="btn" href="mailto:shlokanand93@gmail.com">Get in touch</a>
+    </div>
+  </div>
+
+  <div class="scaledown">
+    <span class="tick">velocity</span>
+    <span class="scalebar"></span>
+    <span class="tick">low → high</span>
+  </div>
+</header>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="no">01</span>
+      <h2>The profile</h2>
+      <p class="meta">A simulation-driven engineer who likes problems where the physics, the numerics, and the cost all have to be balanced at once.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="reveal">
+        <p>I recently completed my Master&rsquo;s in Aeronautical Engineering at Politecnico di Milano. My work spans the full simulation pipeline — building the geometry and mesh, choosing the right turbulence and physics models, automating the solver runs, and then interrogating the results until they actually mean something.</p>
+        <p>Most of my projects live in <b>external aerodynamics and turbulence</b> (zonal RANS&ndash;DES wake studies, truck drag reduction, eVTOL rotor aeroacoustics), but I&rsquo;m just as comfortable in <b>controls and estimation</b> — robust H&infin; synthesis, subspace system identification, and Monte&nbsp;Carlo validation — and in hands-on <b>design and manufacturing</b>, from topology-optimized 3D-printed parts to sheet-metal mechanisms.</p>
+        <p>What ties it together is a habit of treating accuracy and computational cost as a single trade-off to be engineered, not assumed.</p>
+      </div>
+
+      <div class="skillset reveal">
+        <div class="skillgrp">
+          <div class="lbl"><h4>Simulation &amp; CFD</h4></div>
+          <div class="chips">
+            <span class="chip">ANSYS Fluent</span><span class="chip">OpenFOAM v12</span><span class="chip">STAR-CCM+</span>
+            <span class="chip">RANS / URANS</span><span class="chip">DES / DDES / LES</span><span class="chip">Zonal &amp; hybrid methods</span>
+            <span class="chip">k-&epsilon; · k-&omega; SST</span><span class="chip">Aeroacoustics (FW-H)</span>
+          </div>
+        </div>
+        <div class="skillgrp">
+          <div class="lbl"><h4>Multiphysics &amp; FSI</h4></div>
+          <div class="chips">
+            <span class="chip">2-way FSI</span><span class="chip">NASTRAN coupling</span><span class="chip">Overset / morphing mesh</span>
+            <span class="chip">Lagrangian particle tracking</span><span class="chip">Spray &amp; wall-film</span><span class="chip">Combustion (PaSR · CHEMKIN)</span>
+          </div>
+        </div>
+        <div class="skillgrp">
+          <div class="lbl"><h4>Controls &amp; Estimation</h4></div>
+          <div class="chips">
+            <span class="chip">MATLAB / Simulink</span><span class="chip">H&infin; (hinfstruct)</span><span class="chip">Robustness / &mu;-analysis</span>
+            <span class="chip">Observer design</span><span class="chip">System ID — grey-box &amp; PBSID</span><span class="chip">Monte Carlo</span>
+          </div>
+        </div>
+        <div class="skillgrp">
+          <div class="lbl"><h4>Design, Materials &amp; Code</h4></div>
+          <div class="chips">
+            <span class="chip">CAD · STEP</span><span class="chip">Topology optimization</span><span class="chip">Additive mfg (FDM)</span>
+            <span class="chip">FBG fiber-optic sensing</span><span class="chip">Python automation</span><span class="chip">Java macros</span><span class="chip">OpenVSP API</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORK ============ -->
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="no">02</span>
+      <h2>Selected work</h2>
+      <p class="meta">Nine projects across CFD, multiphysics, controls, materials, and design.</p>
+    </div>
+
+    <!-- 1 -->
+    <article class="proj reveal">
+      <span class="coord">Re ≈ 2.0×10⁶</span>
+      <div class="proj-top">
+        <span class="proj-num">01</span>
+        <div>
+          <h3>Zonal Methods for Near-Wake Prediction of the Ahmed Body</h3>
+          <div class="sub">Master&rsquo;s Thesis · Advisor Prof. Paolo Schito · 2024&ndash;25</div>
+        </div>
+        <span class="role">Thesis</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">A hybrid RANS&ndash;DES &ldquo;half-domain&rdquo; strategy that resolves the near wake of a 25&deg; Ahmed body at the fidelity of full-domain DES while cutting cost. A converged RANS field is sampled at mid-body length and becomes the inlet of a smaller DES domain, with a Synthetic Turbulence Generator (STG) rebuilding realistic fluctuations at the interface.</p>
+        <ul class="hl">
+          <li>RANS converged to <b>C<sub>d</sub> = 0.296</b>, within ~2% of experiment</li>
+          <li>Zonal run <b>with STG matched full DES</b> across the near wake; without STG the wake recovered too slowly</li>
+          <li>Polyhex-core mesh with a four-level <b>mesh-independence study</b> (4.8M cells)</li>
+        </ul>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">0.296</div><div class="k">Drag coeff. C<sub>d</sub></div></div>
+        <div class="metric"><div class="v">~2%</div><div class="k">vs experiment</div></div>
+        <div class="metric"><div class="v">4 cases</div><div class="k">RANS · DES · zonal ±STG</div></div>
+      </div>
+      <div class="tools"><span class="tool">ANSYS Fluent</span><span class="tool">DES / STG</span><span class="tool">k-&epsilon; realizable</span><span class="tool">Design Modeler</span></div>
+    </article>
+
+    <!-- 2 -->
+    <article class="proj reveal">
+      <span class="coord">hover → cruise</span>
+      <div class="proj-top">
+        <span class="proj-num">02</span>
+        <div>
+          <h3>eVTOL Aeroelasticity &amp; Aeroacoustics Toolchain</h3>
+          <div class="sub">High-fidelity simulation framework · case study</div>
+        </div>
+        <span class="role">Individual</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">A coupled, fully automated simulation architecture for a 4-bladed variable-pitch tilt-rotor, proposed before geometry freeze. It targets two critical phenomena: transient aeroelastic stability through the hover&rarr;cruise tilt, and hover-phase tonal/broadband noise for urban compliance — and argues why the two physics problems must be decoupled rather than solved in one prohibitive run.</p>
+        <ul class="hl">
+          <li><b>2-way FSI</b> (STAR-CCM+ ↔ NASTRAN) with overset meshes for tilt / spin / pitch and morphing for blade bending</li>
+          <li>URANS k-&omega; SST for loads; <b>DES + Ffowcs-Williams&ndash;Hawkings</b> for noise</li>
+          <li>End-to-end automation: OpenVSP Python API → Java macros → cluster orchestration, with <b>CLS/RBF</b> load&ndash;displacement mapping</li>
+          <li>Diagnosed an FSI vs experiment <b>damping mismatch</b> and proposed a low-cost triage path</li>
+        </ul>
+      </div>
+      <div class="tools"><span class="tool">STAR-CCM+</span><span class="tool">NASTRAN</span><span class="tool">Overset · morphing</span><span class="tool">FW-H</span><span class="tool">Python</span><span class="tool">Java macros</span><span class="tool">OpenVSP</span></div>
+    </article>
+
+    <!-- 3 -->
+    <article class="proj reveal">
+      <span class="coord">L = 16.2 m</span>
+      <div class="proj-top">
+        <span class="proj-num">03</span>
+        <div>
+          <h3>Aerodynamic Drag Reduction of a Euro-Truck</h3>
+          <div class="sub">Aerodynamics of Transport Vehicles · 2024&ndash;25</div>
+        </div>
+        <span class="role">Team of 4</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">A systematic CFD study of drag-reduction devices on a standard tractor-trailer — gap sealing, cab fairings, and boat tails across deflection angles — built on a validated baseline and a poly-hex mesh independence study.</p>
+        <ul class="hl">
+          <li>Cut <b>C<sub>d</sub> from 0.806 → 0.44</b> with an F2 fairing + 5&deg; boat tail</li>
+          <li>~3.5M-cell poly-hex-core mesh (orthogonality 0.99 avg), validated against reference</li>
+          <li>Explored a <b>bio-inspired fairing</b> variant in the appendix</li>
+        </ul>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">~50%</div><div class="k">Drag reduction</div></div>
+        <div class="metric"><div class="v">0.44</div><div class="k">Best C<sub>d</sub></div></div>
+        <div class="metric"><div class="v">7.9M</div><div class="k">Mesh nodes</div></div>
+      </div>
+      <div class="tools"><span class="tool">ANSYS Fluent</span><span class="tool">Fluent Meshing</span><span class="tool">RANS k-&epsilon;</span><span class="tool">SIMPLE</span></div>
+    </article>
+
+    <!-- 4 -->
+    <article class="proj reveal">
+      <span class="coord">peak gain 0.82</span>
+      <div class="proj-top">
+        <span class="proj-num">04</span>
+        <div>
+          <h3>Robust Attitude &amp; Position Control of a Multirotor UAV</h3>
+          <div class="sub">Automatic Control Systems · Prof. Marco Lovera · 2022&ndash;23</div>
+        </div>
+        <span class="role">Team of 3</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">Design and verification of a robust single-axis attitude controller for the ANT-X research quadrotor, then stress-tested under parametric uncertainty over the full nonlinear model.</p>
+        <ul class="hl">
+          <li>Fixed-structure <b>H&infin; synthesis</b> via <span class="mono">hinfstruct</span> — peak gain 0.82, no overshoot, faster settling</li>
+          <li>Robust stability &amp; performance verified <b>with and without actuator dynamics</b></li>
+          <li>Observer-dynamics study + <b>Monte Carlo validation</b> of gain/phase margins</li>
+        </ul>
+      </div>
+      <div class="tools"><span class="tool">MATLAB</span><span class="tool">hinfstruct</span><span class="tool">&mu;-analysis</span><span class="tool">Monte Carlo</span></div>
+    </article>
+
+    <!-- 5 -->
+    <article class="proj reveal">
+      <span class="coord">VAF 76.9–99.96%</span>
+      <div class="proj-top">
+        <span class="proj-num">05</span>
+        <div>
+          <h3>System Identification of a UAV Multirotor</h3>
+          <div class="sub">Estimation &amp; Learning in Aerospace · Prof. Marco Lovera · 2024&ndash;25</div>
+        </div>
+        <span class="role">Individual</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">Identified multirotor pitch dynamics three different ways — grey-box, hand-coded subspace, and a hybrid — then compared their fidelity and robustness under Monte Carlo.</p>
+        <ul class="hl">
+          <li>Grey-box reached <b>94.9% FRF fit</b>, and <b>99.96%</b> on an independent 3-2-1-1 maneuver</li>
+          <li>Wrote <b>PBSID subspace ID</b> from scratch — Markov params → Hankel → SVD → state-space (76.9% VAF, stable poles)</li>
+          <li>Structured grey-box seeded from PBSID; <b>200-sample Monte Carlo</b> on parameters, poles/zeros and FRF spread</li>
+        </ul>
+      </div>
+      <div class="tools"><span class="tool">MATLAB</span><span class="tool">greyest</span><span class="tool">PBSID</span><span class="tool">FRF analysis</span></div>
+    </article>
+
+    <!-- 6 -->
+    <article class="proj reveal">
+      <span class="coord">−81% mass</span>
+      <div class="proj-top">
+        <span class="proj-num">06</span>
+        <div>
+          <h3>Additive Manufacturing &amp; Fiber-Optic Sensing</h3>
+          <div class="sub">Aerospace Technologies &amp; Materials · two-part study</div>
+        </div>
+        <span class="role">Team of 5</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">Two linked studies: a topology-optimized, 3D-printed structural part validated by test, and a composite laminate instrumented with embedded fiber-Bragg-grating sensors for strain and temperature.</p>
+        <ul class="hl">
+          <li>Topology optimization cut part <b>mass by 81%</b> (14.2 g → 2.79 g); experiment within <b>8.9%</b> of FEA</li>
+          <li>FDM in ASA, 45&deg; orientation, 36-min build</li>
+          <li><b>FBG sensors</b> embedded between plies of a 10-ply hybrid carbon/glass laminate; FEM vs experiment validated across loads + a thermal case</li>
+        </ul>
+      </div>
+      <div class="tools"><span class="tool">Topology opt.</span><span class="tool">FEA</span><span class="tool">FDM / ASA</span><span class="tool">FBG sensors</span><span class="tool">Composites</span></div>
+    </article>
+
+    <!-- 7 -->
+    <article class="proj reveal">
+      <span class="coord">5 DOF · ≤300 mm</span>
+      <div class="proj-top">
+        <span class="proj-num">07</span>
+        <div>
+          <h3>5-DOF Adjustable Light Bracket</h3>
+          <div class="sub">Mechanical design · STEP deliverable</div>
+        </div>
+        <span class="role">Individual</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">A sheet-metal mechanism giving five independent, lock-by-friction adjustments (T<sub>x</sub>, T<sub>y</sub>, T<sub>z</sub>, R<sub>x</sub>, R<sub>y</sub>) for a bar light — fixing only the redundant roll axis after a full degree-of-freedom analysis.</p>
+        <ul class="hl">
+          <li>Three bent brackets + two bolts, <b>reusing the light&rsquo;s own M3 screws</b> as a joint</li>
+          <li>Fits well inside the <b>60×120×300 mm envelope</b> at every adjustment extreme</li>
+          <li>Slotted friction-clamp joints; loosen to move, tighten to lock</li>
+        </ul>
+      </div>
+      <div class="tools"><span class="tool">CAD</span><span class="tool">DOF analysis</span><span class="tool">Sheet-metal design</span><span class="tool">STEP</span></div>
+    </article>
+
+    <!-- 8 -->
+    <article class="proj reveal">
+      <span class="coord">4 cases · OpenFOAM</span>
+      <div class="proj-top">
+        <span class="proj-num">08</span>
+        <div>
+          <h3>Thermochemical Propulsion CFD Series</h3>
+          <div class="sub">Computational Techniques in Thermochemical Propulsion · OpenFOAM v12</div>
+        </div>
+        <span class="role">Individual</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">Four progressively coupled combustor studies around a V-gutter flame-holder, each built on the last — moving from incompressible flow all the way to reacting hydrogen combustion.</p>
+        <ul class="hl">
+          <li><b>Incompressible</b> — steady SIMPLE vs unsteady PIMPLE/PISO; wake shedding behind the splitter</li>
+          <li><b>Compressible</b> — Mach &amp; temperature fields with non-reflective <span class="mono">waveTransmissive</span> outlets</li>
+          <li><b>Lagrangian spray + wall-film</b> — n-heptane, Reitz-KHRT / Diwakar breakup, evaporation</li>
+          <li><b>Reactive</b> — H&#8322; combustion via PaSR with CHEMKIN chemistry</li>
+        </ul>
+      </div>
+      <div class="tools"><span class="tool">OpenFOAM</span><span class="tool">PIMPLE / PISO</span><span class="tool">Lagrangian tracking</span><span class="tool">PaSR · CHEMKIN</span></div>
+    </article>
+
+    <!-- 9 -->
+    <article class="proj reveal">
+      <span class="coord">$175B market</span>
+      <div class="proj-top">
+        <span class="proj-num">09</span>
+        <div>
+          <h3>ParcelPals — Last-Mile Delivery Concept</h3>
+          <div class="sub">Entrepreneurship · venture pitch</div>
+        </div>
+        <span class="role">Team</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">A community-collaboration platform that reroutes failed last-mile deliveries to available neighbors in exchange for rewards — a step outside engineering into product and business thinking.</p>
+        <ul class="hl">
+          <li>Targets the <b>~10% of deliveries</b> that fail on first attempt in a <b>$175B</b> last-mile market</li>
+          <li>Built around community collaboration + route optimization</li>
+          <li>Full problem, differentiation and roadmap pitch</li>
+        </ul>
+      </div>
+      <div class="tools"><span class="tool">Product strategy</span><span class="tool">Market analysis</span><span class="tool">Pitch</span></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap reveal">
+    <h2>Let&rsquo;s talk <span class="em">fluids,</span><br>controls, or design.</h2>
+    <p>Open to roles and collaborations in CFD, aerodynamics, simulation, and GNC. The fastest way to reach me is email.</p>
+    <div class="contact-links">
+      <a class="btn solid" href="mailto:shlokanand93@gmail.com">shlokanand93@gmail.com</a>
+      <a class="btn" href="https://www.linkedin.com/in/shlok-anand-54738315b/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:12px">
+    <span class="tick">Shlok Anand · M.Sc. Aeronautical Engineering</span>
+    <span class="tick">Politecnico di Milano · 2025</span>
+  </div>
+</footer>
+
+<script>
+  // nav border on scroll
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+
+  // staggered reveal
+  const io=new IntersectionObserver((es)=>{
+    es.forEach((e)=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12,rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{
+    el.style.transitionDelay=(Math.min(i,6)*60)+'ms';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
